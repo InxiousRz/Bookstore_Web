@@ -17,6 +17,7 @@ import { BookNodeSellerComponent } from './core/book-node-seller/book-node-selle
 import { BookDetailSellerComponent } from './core/book-detail-seller/book-detail-seller.component';
 import { BookFormComponent } from './core/book-form/book-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
