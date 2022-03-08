@@ -37,7 +37,7 @@ const routes: Routes = [
       },
     ]
   },
-  { path: '', redirectTo: 'seller/books/add', pathMatch: 'full' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({

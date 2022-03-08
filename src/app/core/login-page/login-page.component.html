@@ -5,92 +5,106 @@
     <!-- FORM -->
     <div style="">
 
-        <!-- LOGIN FORM -->
-        <div class="container" style="width: 500px; background-color: #FFFFFF; padding: 40px 15px 40px 15px; display:none;">
-
-            <div class="d-flex justify-content-center" style="margin: 0 0 40px 0;">
-                <h1>
-                    Login Seller Panel
-                </h1>
-            </div>
-            
-            <div style="margin: 0 15px 20px 15px">
-
-                <form class="wide">
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      <div id="emailHelp" class="form-text">Input your email</div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passHelp">
-                      <div id="passHelp" class="form-text">Input your password</div>
-                    </div>
-                </form>
-
-            </div>
-
-            <div class="d-flex justify-content-center">
-
-                <div class="d-flex flex-column justify-content-center align-items-center">
-                    <button type="button" class="btn btn-primary btn-lg mx-1 my-1" style="min-width: 200px; background-color: #2A9D8F;">Sign In</button>
-                    <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="min-width: 200px;">Register</button>
-                  </div>
-
-            </div>
-
-            <div class="d-flex justify-content-center">
-                Forget your password ?
-            </div>
-            
+        <!-- NG-IF FORM -->
+        <div *ngIf="registering; then registerBlock else loginBlock" >
         </div>
+
+
+        <!-- LOGIN FORM -->
+        <ng-template #loginBlock>
+
+            <div class="container" style="width: 600px; background-color: #FFFFFF; padding: 40px 15px 40px 15px;">
+            
+                <div class="d-flex justify-content-center" style="margin: 0 0 40px 0;">
+                    <h1>
+                        Login Seller Panel
+                    </h1>
+                </div>
+                
+                <div style="margin: 0 15px 20px 15px">
+    
+                    <form class="wide">
+                        <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label">Email</label>
+                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <div id="emailHelp" class="form-text">Input your email</div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label">Password</label>
+                          <input type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passHelp">
+                          <div id="passHelp" class="form-text">Input your password</div>
+                        </div>
+                    </form>
+    
+                </div>
+    
+                <div class="d-flex justify-content-center">
+    
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <button type="button" class="btn btn-primary btn-lg mx-1 my-1" style="min-width: 200px; background-color: #2A9D8F;">Sign In</button>
+                        <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="min-width: 200px; border: 1px solid #949494;" (click)="switchForm(2)">Register</button>
+                      </div>
+    
+                </div>
+    
+                <div class="d-flex justify-content-center">
+                    Forget your password ?
+                </div>
+            
+            </div>
+
+        </ng-template>
 
         <!-- REGISTER FORM -->
-        <div class="container" style="width: 500px; background-color: #FFFFFF; padding: 40px 15px 40px 15px;">
+        <ng-template #registerBlock>
 
-            <div class="d-flex justify-content-center" style="margin: 0 0 40px 0;">
-                <h1>
-                    Register Seller Panel
-                </h1>
-            </div>
+            <div class="container" style="width: 600px; background-color: #FFFFFF; padding: 40px 15px 40px 15px;">
             
-            <div style="margin: 0 15px 20px 15px">
-
-                <form class="wide">
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Original Name</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      <div id="emailHelp" class="form-text">Input your actual name</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Author Name</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">What you want to be called for your books</div>
-                      </div>
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      <div id="emailHelp" class="form-text">Input your email</div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passHelp">
-                      <div id="passHelp" class="form-text">Input your password</div>
-                    </div>
-                </form>
-
-            </div>
-
-            <div class="d-flex justify-content-center">
-
-                <div class="d-flex flex-column justify-content-center align-items-center">
-                    <button type="button" class="btn btn-primary btn-lg mx-1 my-1" style="min-width: 200px; background-color: #2A9D8F;">Confirm Registration</button>
+                <div class="d-flex justify-content-center" style="margin: 0 0 40px 0;">
+                    <h1>
+                        Register Seller Panel
+                    </h1>
                 </div>
-
+                
+                <div style="margin: 0 15px 20px 15px">
+    
+                    <form class="wide">
+                        <div class="mb-3">
+                          <label for="exampleOriginalName" class="form-label">Original Name</label>
+                          <input type="email" class="form-control" id="exampleOriginalName" aria-describedby="emailHelp">
+                          <div id="emailHelp" class="form-text">Input your actual name</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="examplePenName" class="form-label">Pen Name</label>
+                            <input type="email" class="form-control" id="examplePenName" aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text">What you want to be called for your books</div>
+                          </div>
+                        <div class="mb-3">
+                          <label for="exampleInputEmail2" class="form-label">Email</label>
+                          <input type="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
+                          <div id="emailHelp" class="form-text">Input your email</div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label">Password</label>
+                          <input type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passHelp">
+                          <div id="passHelp" class="form-text">Input your password</div>
+                        </div>
+                    </form>
+    
+                </div>
+    
+                <div class="d-flex justify-content-center">
+    
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <button type="button" class="btn btn-primary btn-lg mx-1 my-1" style="min-width: 250px; background-color: #2A9D8F;">Confirm Registration</button>
+                        <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="min-width: 250px; border: 1px solid #949494" (click)="switchForm(1)">Already Have Account</button>
+                    </div>
+    
+                </div>
+            
             </div>
             
-        </div>
+        </ng-template>
 
     </div>
 

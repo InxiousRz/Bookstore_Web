@@ -7,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
+  registering: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  switchForm(identifier: number){
+    
+    if(identifier === 1){
+      this.registering = false;
+    }
+
+    if(identifier === 2){
+      this.registering = true;
+    }
+
   }
 
 }
