@@ -18,6 +18,8 @@ import { BookDetailSellerComponent } from './core/book-detail-seller/book-detail
 import { BookFormComponent } from './core/book-form/book-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { BookFormUpdateComponent } from './core/book-form-update/book-form-update.component';
+import { BookListviewSellerComponent } from './core/book-listview-seller/book-listview-seller.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     DashboardSellerPageComponent,
     BookNodeSellerComponent,
     BookDetailSellerComponent,
-    BookFormComponent
+    BookFormComponent,
+    BookFormUpdateComponent,
+    BookListviewSellerComponent
   ],
   imports: [
     BrowserModule,

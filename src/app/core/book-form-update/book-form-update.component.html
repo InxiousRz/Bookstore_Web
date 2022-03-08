@@ -16,17 +16,12 @@
     <div class="d-flex flex-column justify-content-center align-items-center wide" style="padding: 20px 0 20px 0;">
         
         <div class="unl-title-bg" style="width: 90%;">
-            Add New Book To Sell
+            Update your Book
         </div>
 
-        <div class="d-flex justify-content-center wide" style="margin: 40px 0 40px 0;">
+        <div class="wide" style="margin: 40px 0 40px 0;">
 
-            <div style="padding: 30px 40px 0 40px; text-align: center;">
-                <div style="color: #227C9D; font-size: 18pt; margin-bottom: 10px;">Book Cover</div>
-                <img [src]="img_cover_source" style="height: 300px; width:200px; object-fit:fill;">
-            </div>
-    
-            <form  style="width:70%; border-left: 1px solid #333333; padding: 0 0 0 40px;">
+            <form class="container" style="width: 70%;">
 
                 <div class="mb-3">
                     <label for="exampleFormControlText1" class="col-form-label-lg">Book Title</label>
@@ -42,29 +37,28 @@
                     <label for="exampleFormControlTextCurr1" class="col-form-label-lg">Book Price</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" id="exampleFormControlTextCurr1" aria-label="Book Price (dollar)" aria-describedby="basic-addon3" step="1" min="0" required>
+                        <input type="number" class="form-control" id="exampleFormControlTextCurr1" aria-label="Book Price (dollar)" aria-describedby="basic-addon3" step="1" required>
                     </div>
                     <div id="basic-addon3" class="form-text">Input your selling price</div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextStock1" class="col-form-label-lg">Total Book To Sell</label>
-                    <input type="number" class="form-control" id="exampleFormControlTextStock1" aria-label="Book Stock" aria-describedby="basic-addon4" step="1" min="0" required>
+                    <input type="number" class="form-control" id="exampleFormControlTextStock1" aria-label="Book Stock" aria-describedby="basic-addon4" step="1" required>
                     <div id="basic-addon4" class="form-text">Input the amount of books you want to sell</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="formFile" class="col-form-label-lg">Book Cover</label>
-                    <input class="form-control" type="file" id="formFile" accept=".jpg,.gif,.png" (change)="displayFile($event)">
+                    <input class="form-control" type="file" id="formFile" accept=".jpg,.gif,.png">
                     <div id="basic-addon4" class="form-text">Upload the book cover image</div>
+                </div>
+    
+                <div class="wide" style="text-align: center; margin-top: 40px;">
+                    <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="background-color: #FE6D73; color: #ffffff; min-width: 250px;">Sell The Book</button>
                 </div>
 
             </form>
-        </div>
 
-        
-    
-        <div class="wide" style="text-align: center; margin-top: 40px;">
-            <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="background-color: #FE6D73; color: #ffffff; min-width: 250px;">Sell The Book</button>
         </div>
         
     </div>

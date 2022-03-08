@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-book-detail-seller',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookDetailSellerComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public activeModal: NgbActiveModal, 
+    private modalService: NgbModal,
+  ) { }
 
   ngOnInit(): void {
   }
+
 
 }

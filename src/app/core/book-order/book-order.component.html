@@ -1,1 +1,70 @@
-<p>book-order works!</p>
+<div>
+    <div class="modal-body">
+
+        <div style="font-size: 28pt; margin: 10px 0 20px 0;">
+            Order Confirmation
+        </div>
+    
+        <div class="d-flex justify-content-start wide">
+
+            <div>
+                <img src="https://rimg.bookwalker.jp/2977113/OWWPXNVne2Og5o9nA6tp3Q__.jpg" class="wide" style="object-fit:fill; border: 1px solid rgb(204, 204, 204); min-width: 350px; max-width: 350px; min-height: 500px; max-height: 500px;">
+                
+            </div>
+
+            <div class="wide" style="margin: 0 0 20px 20px;">
+                <div style="margin: 0 0 20px 20px; ">
+                    
+                    <div style="font-size: 18pt;">
+                        Buy : I Want to Eat Your Pancreas
+                    </div>
+                    
+        
+                    <div style="color: #ff7d00; font-size: 18pt;">
+                        $8.30 each
+                    </div>
+
+                </div>
+
+                <form  style="margin-left: 20px; width: 80%;">
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlText1" class="col-form-label-lg">Name</label>
+                        <input type="text" class="form-control" id="exampleFormControlText1" placeholder="Your Name" aria-label="Recipient's username" aria-describedby="basic-addon1" required>
+                        <div id="basic-addon1" class="form-text">Input your name</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="col-form-label-lg">Email</label>
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your Email">
+                      <div id="emailHelp" class="form-text">Input your email</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextStock1" class="col-form-label-lg">Total Book To Buy</label>
+                        <input type="number" class="form-control" id="exampleFormControlTextStock1" aria-label="Book Stock" aria-describedby="basic-addon4" step="1" min="0" placeholder="How Many to Buy" required>
+                        <div id="basic-addon4" class="form-text">Input the amount of books you want to buy</div>
+                    </div>
+    
+                </form>
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-end wide">
+
+            <div class="d-flex justify-content-center align-items-end">
+    
+                <div>
+                    <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="background-color: #227C9D; color: #ffffff; width: 150px;">Order</button>
+                </div>
+    
+                <div>
+                    <button type="button" class="btn btn-danger btn-lg mx-1 my-1" (click)="cancelOrder()" style="background-color: #FE6D73; color: #ffffff; width: 150px;">Cancel</button>
+                </div>
+    
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

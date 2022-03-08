@@ -1,1 +1,39 @@
-<p>side-bar works!</p>
+<div id="overlay-sidenav">
+
+    <div class="d-flex justify-content-center" style="height: 100%; width:100%">
+        <div id="sidenav" class="d-flex flex-column justify-content-center align-items-center wide">
+        
+            <div style="height: 100px; color: #2A9D8F; font-size: 24pt;" class="d-flex flex-column justify-content-center align-items-center wide">
+                Bookstore Menu
+            </div>
+    
+            <div class="wide" style="flex-grow: 1; margin-top: 60px;">
+    
+                <ul class="wide side-nav-menu">
+                    <li class="side-nav-menu-node" >
+                        Dashboard
+                    </li>
+                    <li class="side-nav-menu-node" >
+                        Seller Dashboard
+                    </li>
+                    <li class="side-nav-menu-node" (click)="hideSideNav()">
+                        Close
+                    </li>
+                </ul>
+    
+            </div>
+    
+            <!-- <div>
+                Todo list tria
+            </div> -->
+    
+        </div>
+    
+        <div id="dismiss-space" style="flex-grow: 1;" (click)="hideSideNav()">
+            &nbsp;
+        </div>
+    </div>
+
+    
+
+</div>
