@@ -16,10 +16,12 @@ export class ApiService {
     private api_utilities: ApiUtilitiesService,
     private local_storage: LocalStorageService
   ) {
-    this.mainlink = "";
+    this.mainlink = "http://localhost:4050";
   }
 
   refreshToken() {
+
+    console.log("Refresh Token =====================");
 
     let base_url = `${this.mainlink}/author/refresh_token`;
 
@@ -45,15 +47,7 @@ export class ApiService {
       }
     );
 
-    let api_data = {
-      "Path": base_url,
-      "Type": "POST"
-    }
-
-    return this.api_utilities.translateResult(
-      result,
-      api_data
-    );
+    return result;
   }
 
   loginAuthor(email: string, password: string) {
@@ -83,15 +77,7 @@ export class ApiService {
       }
     );
 
-    let api_data = {
-      "Path": base_url,
-      "Type": "POST"
-    }
-
-    return this.api_utilities.translateResult(
-      result,
-      api_data
-    );
+    return result;
   }
 
   logoutAuthor() {
@@ -105,7 +91,7 @@ export class ApiService {
     // =====================================================================
     let header = new HttpHeaders({
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + this.local_storage.getItem("refresh_token")
+      "Authorization": "Bearer " + this.local_storage.getItem("access_token")
     });
 
     console.log(base_url)
@@ -119,15 +105,85 @@ export class ApiService {
       }
     );
 
-    let api_data = {
-      "Path": base_url,
-      "Type": "POST"
+    return result;
+  }
+
+  registerAuthor(name: string, pen_name: string, email: string, password: string) {
+
+    let base_url = `${this.mainlink}/author/register`;
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.post(
+      base_url,
+      {
+        "Name": name,
+        "Pen_Name": pen_name,
+        "Email": email,
+        "Password": password,
+      },
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  getBooks(name_search: string | null, author_id: number | null, page: number, limit: number) {
+
+    let base_url = `${this.mainlink}/book/get`;
+
+    // PARAMS
+    // =====================================================================
+    let query_param = new HttpParams();
+
+    // TITLE
+    if(name_search != null){
+      query_param = query_param.set("Title", name_search.toString());
     }
 
-    return this.api_utilities.translateResult(
-      result,
-      api_data
+    // AUTHOR
+    if(author_id != null){
+      query_param = query_param.set("Author_ID", author_id.toString());
+    }
+
+    // PAGE
+    query_param = query_param.set("Page", page.toString());
+
+    // LIMIT
+    query_param = query_param.set("Limit", limit.toString());
+
+    // console.log(query_param.toString());
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.get(
+      base_url,
+      {
+        headers: header,
+        params: query_param,
+        observe: 'response'
+      }
     );
+
+    return result;
   }
 
 }

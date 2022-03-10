@@ -18,10 +18,7 @@
     </div>
 
     <div style="width: 90%; margin: 20px 0 40px 0;">
-        <app-book-node></app-book-node>
-        <app-book-node></app-book-node>
-        <app-book-node></app-book-node>
-        <app-book-node></app-book-node>
+        <app-book-node *ngFor="let book_data of fetched_books; let i = index" [book_data]="book_data"></app-book-node>
     </div>
 
     <div class="d-flex flex-column justify-content-center align-items-center wide" style="margin: 10px;">

@@ -8,20 +8,23 @@
         <div class="d-flex justify-content-start wide">
 
             <div>
-                <img src="https://rimg.bookwalker.jp/2977113/OWWPXNVne2Og5o9nA6tp3Q__.jpg" class="wide" style="object-fit:fill; border: 1px solid rgb(204, 204, 204); min-width: 350px; max-width: 350px; min-height: 500px; max-height: 500px;">
+                <img [src]="book_data['Cover_URL']" class="wide" style="object-fit:fill; border: 1px solid rgb(204, 204, 204); min-width: 350px; max-width: 350px; min-height: 500px; max-height: 500px;">
                 
             </div>
 
             <div class="wide" style="margin: 0 0 20px 20px;">
                 <div style="margin: 0 0 20px 20px; ">
                     
-                    <div style="font-size: 18pt;">
-                        Buy : I Want to Eat Your Pancreas
+                    <div style="font-size: 18pt; font-weight: 600;">
+                        <span style="color: #3f3f3f;">Buy : </span>
+                        <span style="color: #227C9D;">
+                            {{book_data['Title']}}
+                        </span>
                     </div>
                     
         
-                    <div style="color: #ff7d00; font-size: 18pt;">
-                        $8.30 each
+                    <div style="color: #ff7d00; font-size: 22pt;">
+                        Rp.{{book_data['Price']}} <span style="color: #000000;">/ book</span>
                     </div>
 
                 </div>
@@ -40,7 +43,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextStock1" class="col-form-label-lg">Total Book To Buy</label>
-                        <input type="number" class="form-control" id="exampleFormControlTextStock1" aria-label="Book Stock" aria-describedby="basic-addon4" step="1" min="0" placeholder="How Many to Buy" required>
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" id="exampleFormControlTextStock1" aria-label="Book Stock" aria-describedby="basic-addon4" step="1" min="0" [max]="book_data['Stock']" placeholder="How Many to Buy" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon5">Max {{book_data['Stock']}}</span>
+                            </div>
+                        </div>
                         <div id="basic-addon4" class="form-text">Input the amount of books you want to buy</div>
                     </div>
     

@@ -4,17 +4,17 @@
         <div id="sidenav" class="d-flex flex-column justify-content-center align-items-center wide">
         
             <div style="height: 100px; color: #2A9D8F; font-size: 24pt;" class="d-flex flex-column justify-content-center align-items-center wide">
-                Bookstore Menu
+                Seller Menu
             </div>
     
             <div class="wide" style="flex-grow: 1; margin-top: 60px;">
     
                 <ul class="wide side-nav-menu">
-                    <li class="side-nav-menu-node" >
-                        Dashboard
+                    <li class="side-nav-menu-node" (click)="toDashboard()">
+                        Go To Store
                     </li>
-                    <li class="side-nav-menu-node" >
-                        Seller Dashboard
+                    <li class="side-nav-menu-node" (click)="toDashboardSeller()">
+                        Seller Center
                     </li>
                     <li class="side-nav-menu-node" (click)="hideSideNav()">
                         Close

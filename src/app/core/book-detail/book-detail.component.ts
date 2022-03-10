@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookOrderComponent } from '../book-order/book-order.component';
@@ -9,6 +9,8 @@ import { BookOrderComponent } from '../book-order/book-order.component';
   styleUrls: ['./book-detail.component.css']
 })
 export class BookDetailComponent implements OnInit {
+
+  @Input('book_data') book_data: any;
 
   constructor(
     public activeModal: NgbActiveModal, 
@@ -21,7 +23,7 @@ export class BookDetailComponent implements OnInit {
   openOrder(){
     
     const modalRef = this.modalService.open(BookOrderComponent, { size: 'xl', scrollable: true, centered: true, backdrop: 'static' });
-    modalRef.componentInstance.name = 'Order Book';
+    modalRef.componentInstance.book_data = this.book_data;
     
 
     // modalRef.dismissed.subscribe((data)=>{

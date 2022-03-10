@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BookListviewSellerComponent } from '../book-listview-seller/book-listview-seller.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
+import { ApiService } from '../services/api.service';
+import { Router } from '@angular/router';
+import { ApiUtilitiesService } from '../services/api-utilities.service';
 
 @Component({
   selector: 'app-dashboard-seller-page',
@@ -11,7 +14,11 @@ export class DashboardSellerPageComponent implements OnInit {
 
   show_sidenav: boolean = false;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private api_utilities: ApiUtilitiesService,
+    private api: ApiService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -24,7 +31,29 @@ export class DashboardSellerPageComponent implements OnInit {
       this.show_sidenav = false;
     }
     
+  }
 
+  checkLogin(){
+
+    return this.api_utilities.checkLogin()
+
+  }
+
+  logout(){
+    this.api.logoutAuthor()
+    .subscribe((data: any)=>{
+
+      if (data.body 
+        && data.body["Success"]
+      ){
+        
+        console.log(data);
+        this.api_utilities.logoutClearAuth();
+        this.router.navigate(['dashboard']);
+
+      }
+      
+    });
   }
 
 }

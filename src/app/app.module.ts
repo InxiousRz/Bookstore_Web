@@ -20,6 +20,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookFormUpdateComponent } from './core/book-form-update/book-form-update.component';
 import { BookListviewSellerComponent } from './core/book-listview-seller/book-listview-seller.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RefreshTokenInterceptor } from './core/intercept/refresh-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,9 +46,13 @@ import { BookListviewSellerComponent } from './core/book-listview-seller/book-li
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
