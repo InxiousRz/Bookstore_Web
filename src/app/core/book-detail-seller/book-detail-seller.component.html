@@ -9,11 +9,16 @@
 
             <div>
                 <img [src]="book_data['Cover_URL']" class="wide" style="object-fit:fill; border: 1px solid rgb(204, 204, 204); min-width: 350px; max-width: 350px; min-height: 500px; max-height: 500px;">
+                
+                <div class="wide" style="text-align: center; margin: 10px 0 10px 0; color: #ff7d00; font-size: 22pt; ">
+                    {{ formatCurrencyReadable(book_data['Price']) }}
+                </div>
+
                 <div class="wide" style="text-align: center; margin: 10px 0 10px 0;">
                     {{book_data['Stock']}} in stock
                 </div>
             </div>
-
+            
             <div class="flex-grow-1" style="margin: 0 10px 0 10px; padding-left: 20px;">
 
                 <div style="color: #227C9D; border-bottom: 1px solid #227C9D; font-size: 18pt;">

@@ -69,7 +69,7 @@ export class DashboardSellerPageComponent implements OnInit {
   }
 
   toAddBook(){
-    this.router.navigate(['seller', 'books', 'add'])
+    this.router.navigate(['seller', 'books', 'add']);
   }
 
   applySearchFilter(){
@@ -80,6 +80,10 @@ export class DashboardSellerPageComponent implements OnInit {
 
   toAuthorProfile(){
     this.router.navigate(['seller', 'profile']);
+  }
+
+  toSales(){
+    this.router.navigate(['seller', 'sales']);
   }
 
 }

@@ -142,8 +142,8 @@
                   <td>{{ sale["Recipient_Name"] }}</td>
                   <td>{{ sale["Recipient_Email"] }}</td>
                   <td>{{ sale["Quantity"] }}</td>
-                  <td>{{ sale["Price_Per_Unit"] }}</td>
-                  <td>{{ sale["Total_Price"] }}</td>
+                  <td>{{ formatCurrencyReadable(sale["Price_Per_Unit"]) }}</td>
+                  <td>{{ formatCurrencyReadable(sale["Total_Price"]) }}</td>
                 </tr>
                 </tbody>
               </table>

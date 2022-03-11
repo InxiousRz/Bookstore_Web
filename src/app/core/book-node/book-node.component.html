@@ -11,7 +11,7 @@
     <div class="d-flex align-items-center" style="margin: 10px 0 10px 0; padding: 0 10px 0 10px;">
 
             <div style="color: #ff7d00; font-size: 14pt; ">
-                Rp.{{book_data['Price']}}
+                {{ formatCurrencyReadable(book_data['Price']) }}
             </div>
 
     </div>

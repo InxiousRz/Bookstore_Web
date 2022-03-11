@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { DialogueConfirmationComponent } from '../dialogue-confirmation/dialogue-confirmation.component';
+import { ApiUtilitiesService } from '../services/api-utilities.service';
 
 @Component({
   selector: 'app-book-detail-seller',
@@ -19,6 +20,7 @@ export class BookDetailSellerComponent implements OnInit {
     private modalService: NgbModal,
     private router: Router,
     private api: ApiService,
+    private api_utilities: ApiUtilitiesService,
   ) { }
 
   ngOnInit(): void {
@@ -105,6 +107,10 @@ export class BookDetailSellerComponent implements OnInit {
       }
       
     });
+  }
+
+  formatCurrencyReadable(currency: string){
+    return "Rp. " + this.api_utilities.formatCurrency(currency);
   }
 
 }

@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookOrderComponent } from '../book-order/book-order.component';
 import { ApiService } from '../services/api.service';
+import { ApiUtilitiesService } from '../services/api-utilities.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -17,6 +18,7 @@ export class BookDetailComponent implements OnInit {
     public activeModal: NgbActiveModal, 
     private modalService: NgbModal,
     private api: ApiService,
+    private api_utilities: ApiUtilitiesService,
   ) { }
 
   ngOnInit(): void {
@@ -69,6 +71,10 @@ export class BookDetailComponent implements OnInit {
       }
       
     });
+  }
+
+  formatCurrencyReadable(currency: string){
+    return "Rp. " + this.api_utilities.formatCurrency(currency);
   }
 
 }

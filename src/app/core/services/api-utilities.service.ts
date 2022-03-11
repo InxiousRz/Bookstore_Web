@@ -191,4 +191,8 @@ export class ApiUtilitiesService {
     this.router.navigate(['dashboard']); // RELOGIN
   }
 
+  formatCurrency(currency: string){
+    return  Number(currency).toFixed(10).replace(/\d(?=(\d{3})+\.)/g, '$&.').split('.0000000000')[0]; // sry im Lazy
+  }
+
 }

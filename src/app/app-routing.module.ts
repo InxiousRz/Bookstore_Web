@@ -58,7 +58,7 @@ const routes: Routes = [
       },
     ]
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', component: NotFoundPageComponent },  // Wildcard route for a 404 page
 ];
 

@@ -24,7 +24,7 @@
                     
         
                     <div style="color: #ff7d00; font-size: 22pt;">
-                        Rp.{{book_data['Price']}} <span style="color: #000000;">/ book</span>
+                        {{ formatCurrencyReadable(book_data['Price']) }} <span style="color: #000000;">/ book</span>
                     </div>
 
                 </div>

@@ -360,4 +360,8 @@ export class SalesPageComponent implements OnInit {
     return readable;
   }
 
+  formatCurrencyReadable(currency: string){
+    return "Rp. " + this.api_utilities.formatCurrency(currency);
+  }
+
 }

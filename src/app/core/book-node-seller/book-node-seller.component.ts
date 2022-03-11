@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookDetailSellerComponent } from '../book-detail-seller/book-detail-seller.component';
-import { ApiService } from '../services/api.service';
+import { ApiUtilitiesService } from '../services/api-utilities.service';
 
 @Component({
   selector: 'app-book-node-seller',
@@ -15,6 +15,7 @@ export class BookNodeSellerComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
+    private api_utilities: ApiUtilitiesService,
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +48,10 @@ export class BookNodeSellerComponent implements OnInit {
     //   console.log(data);
     // });
 
+  }
+
+  formatCurrencyReadable(currency: string){
+    return "Rp. " + this.api_utilities.formatCurrency(currency);
   }
 
 }
