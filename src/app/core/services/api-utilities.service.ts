@@ -42,9 +42,7 @@ export class ApiUtilitiesService {
             "Body": body["data"],
             "Response": response
           };
-        }
-
-        if(body["message"] == "Failed"){
+        } else if (body["message"] == "Failed"){
           success = false;
           error_desc = body;
           return_data = {
@@ -58,7 +56,17 @@ export class ApiUtilitiesService {
             status.toString(),
           )
           
+        } else {
+          
+          success = true;
+          return_data = {
+            "Body": body,
+            "Response": response
+          };
+
         }
+
+        
 
         return {
           "Success": success,

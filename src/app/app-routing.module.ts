@@ -10,16 +10,20 @@ import { AuthorProfileUpdateComponent } from './core/author-profile-update/autho
 import { AuthorPasswordUpdateComponent } from './core/author-password-update/author-password-update.component';
 import { SalesPageComponent } from './core/sales-page/sales-page.component';
 import { AuthGuardGuard } from './guard/auth-guard.guard';
+import { PreloadDataGuard } from './guard/preload-data.guard';
 import { NotFoundPageComponent } from './core/not-found-page/not-found-page.component';
 
 const routes: Routes = [
   {
     path: 'login',
+    // canActivate: [UserAccessGuard],
+    resolve: {data: PreloadDataGuard},
     component: LoginPageComponent
   },
   {
     path: 'dashboard',
     // canActivate: [UserAccessGuard],
+    resolve: {data: PreloadDataGuard},
     component: DashboardGeneralPageComponent,
   },
   {

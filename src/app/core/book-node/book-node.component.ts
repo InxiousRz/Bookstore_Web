@@ -21,7 +21,7 @@ export class BookNodeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.book_data)
+    // console.log(this.book_data)
 
   }
 

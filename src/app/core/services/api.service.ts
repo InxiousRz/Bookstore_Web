@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ApiUtilitiesService } from './api-utilities.service';
 import { LocalStorageService } from './local-storage.service';
+import { finalize, map, tap } from 'rxjs';
 
 
 @Injectable({
@@ -9,14 +10,47 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class ApiService {
 
-  mainlink: string;
+  project_config: any;
+  mainlink: string = "NOT_ASSIGNED_YET";
 
   constructor(
     private http: HttpClient,
-    private api_utilities: ApiUtilitiesService,
     private local_storage: LocalStorageService
   ) {
-    this.mainlink = "http://localhost:4050";
+    // this.mainlink = "http://localhost:4050";
+  }
+
+
+  loadConfig(){
+
+    if(this.mainlink == "NOT_ASSIGNED_YET"){
+      this.http.get('assets/project_config.json')
+      .subscribe((data)=>{
+        this.setConfig(data)
+      });
+    }
+    
+
+  }
+
+  loadConfigAsync(){
+
+    if(this.mainlink == "NOT_ASSIGNED_YET"){
+      return this.http.get('assets/project_config.json')
+      .pipe(
+        map((data: any)=>{
+          this.setConfig(data["Modified_Payload"]["Body"])
+        })
+      );
+    }
+
+    return null;
+
+  }
+
+  setConfig(config: any){
+    this.project_config = config;
+    this.mainlink = config["Main_URL"];
   }
 
 
