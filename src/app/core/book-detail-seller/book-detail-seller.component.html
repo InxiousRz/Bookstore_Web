@@ -1,50 +1,59 @@
 <div>
-    <div class="modal-body">
+    <div class="modal-body" style="max-height: 75vh; overflow: auto;">
 
         <div style="font-size: 28pt; margin: 10px 0 20px 0;">
-            I Want to Eat Your Pancreas
+            {{book_data['Title']}}
         </div>
     
         <div class="d-flex justify-content-center wide">
 
             <div>
-                <img src="https://rimg.bookwalker.jp/2977113/OWWPXNVne2Og5o9nA6tp3Q__.jpg" class="wide" style="object-fit:fill; border: 1px solid rgb(204, 204, 204); min-width: 350px; max-width: 350px; min-height: 500px; max-height: 500px;">
+                <img [src]="book_data['Cover_URL']" class="wide" style="object-fit:fill; border: 1px solid rgb(204, 204, 204); min-width: 350px; max-width: 350px; min-height: 500px; max-height: 500px;">
                 <div class="wide" style="text-align: center; margin: 10px 0 10px 0;">
-                    10 in stock
-                </div>
-                <div class="wide" style="text-align: center; margin: 10px 0 10px 0;">
-    
-                    <div style="color: #ff7d00; font-size: 18pt; margin-right: 5px;">
-                        $8.30
-                    </div>
-    
+                    {{book_data['Stock']}} in stock
                 </div>
             </div>
 
-            <div style="margin: 10px;">
-                <p style="">
-                    Hotheaded Kozuka Mitsuomi left his home in the country for a sophisticated life in Tokyo. Unfortunately, at age 25, he's fired from his job and returns home in disgrace. As he tries to rediscover himself, he meets Kumai Yamato, a man about his age who was adopted into his community while Mitsuomi was away. The sweet and even-tempered Yamato is hiding his own pain, and as the two men connect, they start a journey together.
+            <div class="flex-grow-1" style="margin: 0 10px 0 10px; padding-left: 20px;">
+
+                <div style="color: #227C9D; border-bottom: 1px solid #227C9D; font-size: 18pt;">
+                    Author
+                </div>
+                <div class="wide" style="text-align: left;">
+                    <p style="white-space: pre-line; font-size: 12pt;  margin: 10px 0 20px 0;">
+                        {{book_data['Author_Pen_Name']}}
+                    </p>
+                </div>
+
+                <div style="color: #227C9D; border-bottom: 1px solid #227C9D; font-size: 18pt;">
+                    About this Book
+                </div>
+                <p style="white-space: pre-line; font-size: 14pt;">
+                    {{book_data['Summary']}}    
                 </p>
             </div>
 
         </div>
 
+        
+
+    </div>
+    <div class="modal-footer">
         <div class="d-flex justify-content-end wide">
 
             <div class="d-flex justify-content-center align-items-end">
     
                 <div>
-                    <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="background-color: #227C9D; color: #ffffff; width: 150px;">Update</button>
+                    <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="background-color: #227C9D; color: #ffffff; width: 150px;" (click)="openEditForm()">Update</button>
                 </div>
     
                 <div>
-                    <button type="button" class="btn btn-danger btn-lg mx-1 my-1" style="background-color: #FE6D73; color: #ffffff; width: 150px;">Delete</button>
+                    <button type="button" class="btn btn-danger btn-lg mx-1 my-1" style="background-color: #FE6D73; color: #ffffff; width: 150px;" (click)="openDeleteConfirmationDialogue()">Delete</button>
                 </div>
     
             </div>
 
         </div>
-
     </div>
 
 </div>

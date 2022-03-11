@@ -15,6 +15,11 @@ export class DashboardGeneralPageComponent implements OnInit {
   is_loged_in: boolean = false;
   show_sidenav: boolean = false;
 
+  pending_search_filter: string = "";
+  search_filter: string | null = null;
+
+  user_data: any;
+
   constructor(
     private router: Router,
     private api_utilities: ApiUtilitiesService,
@@ -22,6 +27,9 @@ export class DashboardGeneralPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.user_data = this.api_utilities.getCurrentUserData();
+
   }
 
   toLoginPage(){
@@ -59,6 +67,16 @@ export class DashboardGeneralPageComponent implements OnInit {
       }
       
     });
+  }
+
+  applySearchFilter(){
+    console.log(this.search_filter)
+    this.search_filter = this.pending_search_filter == "" ? null : this.pending_search_filter;
+    console.log(this.pending_search_filter)
+  }
+
+  toAuthorProfile(){
+    this.router.navigate(['seller', 'profile']);
   }
 
 }

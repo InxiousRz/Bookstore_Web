@@ -23,39 +23,54 @@
 
             <div style="padding: 30px 40px 0 40px; text-align: center;">
                 <div style="color: #227C9D; font-size: 18pt; margin-bottom: 10px;">Book Cover</div>
-                <img [src]="img_cover_source" style="height: 300px; width:200px; object-fit:fill;">
+                <img [src]="img_cover_source" style="height: 330px; width:220px; object-fit:fill;">
             </div>
     
             <form  style="width:70%; border-left: 1px solid #333333; padding: 0 0 0 40px;">
 
                 <div class="mb-3">
                     <label for="exampleFormControlText1" class="col-form-label-lg">Book Title</label>
-                    <input type="text" class="form-control" id="exampleFormControlText1" placeholder="Book Title" aria-label="Recipient's username" aria-describedby="basic-addon1" required>
-                    <div id="basic-addon1" class="form-text">Input your book title</div>
+                    <input type="text" [ngClass]="ngclass_title" id="exampleFormControlText1" placeholder="Book Title" aria-label="Recipient's username" aria-describedby="basic-addon1" name="textInputTitle" [(ngModel)]="title" required>
+                    <div *ngIf="ngclass_title['is-invalid'] == false;" id="basic-addon1" class="form-text">Input your book title</div>
+                    <div class="invalid-feedback">
+                        Please input a title for your book.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="col-form-label-lg">Book Summary</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Book Summary" aria-label="Book Summary" aria-describedby="basic-addon2" required></textarea>
-                    <div id="basic-addon2" class="form-text">Input your book summary</div>
+                    <textarea [ngClass]="ngclass_summary" id="exampleFormControlTextarea1" rows="10" placeholder="Book Summary" aria-label="Book Summary" aria-describedby="basic-addon2" name="textInputSummary" [(ngModel)]="summary" required></textarea>
+                    <div *ngIf="ngclass_summary['is-invalid'] == false;" id="basic-addon2" class="form-text">Input your book summary</div>
+                    <div class="invalid-feedback">
+                        Please input a summary for your book.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextCurr1" class="col-form-label-lg">Book Price</label>
                     <div class="input-group">
-                        <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" id="exampleFormControlTextCurr1" aria-label="Book Price (dollar)" aria-describedby="basic-addon3" step="1" min="0" required>
+                        <span class="input-group-text">Rp.</span>
+                        <input type="number" [ngClass]="ngclass_price" id="exampleFormControlTextCurr1" aria-label="Book Price (dollar)" aria-describedby="basic-addon3" step="1" min="0" name="numberInputPrice" [(ngModel)]="price" required>
+                        <div class="invalid-feedback">
+                            Please input a price for your book. ( can't be 0 )
+                        </div>
                     </div>
-                    <div id="basic-addon3" class="form-text">Input your selling price</div>
+                    <div *ngIf="ngclass_price['is-invalid'] == false;" id="basic-addon3" class="form-text">Input your selling price</div>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlTextStock1" class="col-form-label-lg">Total Book To Sell</label>
-                    <input type="number" class="form-control" id="exampleFormControlTextStock1" aria-label="Book Stock" aria-describedby="basic-addon4" step="1" min="0" required>
-                    <div id="basic-addon4" class="form-text">Input the amount of books you want to sell</div>
+                    <label for="exampleFormControlTextStock1" class="col-form-label-lg">Total Book To Sell (Stock)</label>
+                    <input type="number" [ngClass]="ngclass_stock" id="exampleFormControlTextStock1" aria-label="Book Stock" aria-describedby="basic-addon4" step="1" min="0" name="numberInputStock" [(ngModel)]="stock" required>
+                    <div *ngIf="ngclass_stock['is-invalid'] == false;" id="basic-addon4" class="form-text">Input the amount of books you want to sell</div>
+                    <div class="invalid-feedback">
+                        Please input stock number of your book.  ( can't be 0 )
+                    </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="formFile" class="col-form-label-lg">Book Cover</label>
-                    <input class="form-control" type="file" id="formFile" accept=".jpg,.gif,.png" (change)="displayFile($event)">
-                    <div id="basic-addon4" class="form-text">Upload the book cover image</div>
+                    <input [ngClass]="ngclass_cover" type="file" id="formFile" accept=".jpg,.jpeg,.png" (change)="displayFile($event)">
+                    <div *ngIf="ngclass_cover['is-invalid'] == false;" id="basic-addon4" class="form-text">Upload the book cover image</div>
+                    <div class="invalid-feedback">
+                        Please choose a image cover for your book.
+                    </div>
                 </div>
 
             </form>
@@ -64,7 +79,8 @@
         
     
         <div class="wide" style="text-align: center; margin-top: 40px;">
-            <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="background-color: #FE6D73; color: #ffffff; min-width: 250px;">Sell The Book</button>
+            <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="background-color: #227C9D; color: #ffffff; min-width: 250px;" (click)="openAddConfirmationDialogue()">Sell The Book</button>
+            <button type="button" class="btn btn-light btn-lg mx-1 my-1" style="background-color: #FE6D73; color: #ffffff; min-width: 250px;" (click)="cancelAdd()">Cancel Add</button>
         </div>
         
     </div>

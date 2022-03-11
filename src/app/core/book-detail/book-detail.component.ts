@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookOrderComponent } from '../book-order/book-order.component';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -15,9 +16,11 @@ export class BookDetailComponent implements OnInit {
   constructor(
     public activeModal: NgbActiveModal, 
     private modalService: NgbModal,
+    private api: ApiService,
   ) { }
 
   ngOnInit(): void {
+    this.loadBookData();
   }
 
   openOrder(){
@@ -33,25 +36,11 @@ export class BookDetailComponent implements OnInit {
 
     modalRef.closed.subscribe((data)=>{
 
-      // if(data === true){
+      if(data === "REFRESH"){
 
-      //   this.task_loading_state = true;
-      //   this.loadToDoList()
-      //   .subscribe(([success, result])=>{
-      //     console.log(success)
-      //     console.log(result)
-      //     if(success){
-      //       let pagination_data = result["Pagination_Data"];
-      //       let data = result["List_Data"];
-      //       data = this.formatToDoList(data);
-      //       this.todo_data_count = data["Count_Task_Total"];
-      //       this.todo_data = data["Group_Data"];
-      //       this.todo_data_key_list = Object.keys(this.todo_data);
-      //     }
-      //     this.task_loading_state = false;
-      //   });
+        this.activeModal.close("REFRESH");
 
-      // }
+      }
       
 
     });
@@ -61,6 +50,25 @@ export class BookDetailComponent implements OnInit {
     //   console.log(data);
     // });
 
+  }
+
+  loadBookData(){
+    this.api.getBookByID(
+      this.book_data["Book_ID"]
+    ).subscribe((data: any)=>{
+
+      if (data.body 
+        && data.body["Success"]
+      ){
+        
+        console.log(data);
+        this.book_data = data.body["Modified_Payload"]["Body"];
+
+      } else {
+        this.activeModal.close("REFRESH");
+      }
+      
+    });
   }
 
 }

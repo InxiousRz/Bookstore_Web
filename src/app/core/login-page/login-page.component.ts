@@ -20,6 +20,9 @@ export class LoginPageComponent implements OnInit {
   reg_email: string = "";
   reg_password: string = "";
 
+  forgot_email: string = "";
+  new_password: string = "";
+
   constructor(
     private api: ApiService,
     private local_storage: LocalStorageService,
@@ -60,7 +63,7 @@ export class LoginPageComponent implements OnInit {
             data.body["Modified_Payload"]["Body"]["Access_Token"]
           );
 
-          this.api_utilities.decryptAuthandGetUserData(
+          this.api_utilities.decryptAuthandSaveUserData(
             data.body["Modified_Payload"]["Body"]["Access_Token"]
           );
 
@@ -89,6 +92,10 @@ export class LoginPageComponent implements OnInit {
           && data.body["Success"]
         ){
           
+          this.reg_name = "";
+          this.reg_pen_name = "";
+          this.reg_email = "";
+          this.reg_password = "";
           this.switchForm(3);
 
         }
@@ -97,6 +104,32 @@ export class LoginPageComponent implements OnInit {
 
     }
 
+  }
+
+  toDashboard(){
+    this.router.navigate(['dashboard']);
+  }
+
+  forgotPassword(){
+    if(this.forgot_email != null){
+
+      this.api.resetAuthorPassword(
+        this.forgot_email
+      ).subscribe((data: any)=>{
+
+        if (data.body 
+          && data.body["Success"]
+        ){
+          
+          this.new_password = data.body["Modified_Payload"]["Body"]["New_Password"];
+          this.forgot_email = "";
+          this.switchForm(5);
+
+        }
+        
+      });
+
+    }
   }
 
 }

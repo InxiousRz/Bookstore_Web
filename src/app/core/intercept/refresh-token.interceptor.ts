@@ -25,24 +25,18 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request).pipe(
 
-      // TRANSLATE RESULT
-      map((event: HttpEvent<any>) => {
-        if (event instanceof HttpResponse) {
-          const modEvent = event.clone({ 
-            body: this.api_utilities.translateResult(
-              event,
-              request.method,
-              request.url
-            )
-          });
-          
-          return modEvent;
+    const is_loged_in = this.api_utilities.checkLogin();
+    if (is_loged_in) {
+        let access_token = this.api_utilities.getActiveAccessToken();
+        if(access_token){
+          request = request.clone({headers: request.headers.set('Authorization', "Bearer " + access_token)});
         }
+    }
 
-        return event;
-      }),
+    this.logWhatWeSend(request);
+
+    return next.handle(request).pipe(
 
       // CATCH ERR
       catchError((error: HttpErrorResponse, caught: Observable<HttpEvent<unknown>>) => {
@@ -60,16 +54,22 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
             );
 
           } else {
+
             this.refresh_token_inprogress = true;
 
             // Set the refresh_token_subject to null so that subsequent API calls will wait until the new token has been retrieved
             this.refresh_token_subject.next(null);
             
             return this.refreshAccessToken().pipe(
-              switchMap((success: boolean) => {               
+              switchMap((success: boolean) => {      
+
                 this.refresh_token_subject.next(success);
 
-                request = request.clone({headers: request.headers.set('Authorization', 'application/json')});
+                let new_access_token = this.api_utilities.getActiveAccessToken();
+                if(new_access_token){
+                  request = request.clone({headers: request.headers.set('Authorization', "Bearer " + new_access_token)});
+                }
+                
 
                 return next.handle(request);
               }),
@@ -81,7 +81,26 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
         } else {
           return throwError(() => error);
         }
+      }),
+      
+
+      // TRANSLATE RESULT
+      map((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          const modEvent = event.clone({ 
+            body: this.api_utilities.translateResult(
+              event,
+              request.method,
+              request.url
+            )
+          });
+          
+          return modEvent;
+        }
+
+        return event;
       })
+
     );
   }
 
@@ -90,30 +109,25 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
     return this.api.refreshToken().pipe(
       map((response: HttpResponse<any>)=>{
 
+        console.log(response);
+
         if(response.status === 200){
 
-          if(response.body["message"] == "Success"){
+          if(response.body["Success"]){
 
-            // this.local_storage.setItem(
-            //   "refresh_token",
-            //   response.body["Refresh_Token"]
-            // );
-
-            // this.local_storage.setItem(
-            //   "access_token",
-            //   response.body["Access_Token"]
-            // );
+            console.log("SET NEW TOKEN");
 
             this.api_utilities.loginAssignAuth(
-              response.body["Refresh_Token"],
-              response.body["Access_Token"]
+              response.body["Modified_Payload"]["Body"]["Refresh_Token"],
+              response.body["Modified_Payload"]["Body"]["Access_Token"]
             );
+
 
           } else {
 
             this.api_utilities.renavigateLogin(
-              response.body["error_message"],
-              JSON.stringify(response.body, null, 2),
+              response.body["Modified_Payload"]["Body"]["error_message"],
+              JSON.stringify(response.body["Modified_Payload"], null, 2),
             );
 
           }
@@ -125,6 +139,14 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       })
     );
 
+  }
+
+  logWhatWeSend(request: HttpRequest<any>){
+    console.log("\n");
+    console.log("SENDING");
+    console.log("=======================================");
+    console.log(request);
+    console.log("=======================================");
   }
 
 }

@@ -14,6 +14,11 @@ export class DashboardSellerPageComponent implements OnInit {
 
   show_sidenav: boolean = false;
 
+  pending_search_filter: string = "";
+  search_filter: string | null = null;
+
+  user_data: any;
+
   constructor(
     private router: Router,
     private api_utilities: ApiUtilitiesService,
@@ -21,6 +26,13 @@ export class DashboardSellerPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
+    if(this.api_utilities.checkLogin()){
+      this.user_data = this.api_utilities.getCurrentUserData();
+    } else {
+      this.api_utilities.renavigateLoginSilent()
+    }
+    
   }
 
   sideNavHandler(state: boolean){
@@ -54,6 +66,20 @@ export class DashboardSellerPageComponent implements OnInit {
       }
       
     });
+  }
+
+  toAddBook(){
+    this.router.navigate(['seller', 'books', 'add'])
+  }
+
+  applySearchFilter(){
+    console.log(this.search_filter)
+    this.search_filter = this.pending_search_filter == "" ? null : this.pending_search_filter;
+    console.log(this.pending_search_filter)
+  }
+
+  toAuthorProfile(){
+    this.router.navigate(['seller', 'profile']);
   }
 
 }

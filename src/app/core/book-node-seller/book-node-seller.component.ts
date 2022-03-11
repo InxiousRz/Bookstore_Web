@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookDetailSellerComponent } from '../book-detail-seller/book-detail-seller.component';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-book-node-seller',
@@ -8,6 +9,9 @@ import { BookDetailSellerComponent } from '../book-detail-seller/book-detail-sel
   styleUrls: ['./book-node-seller.component.css']
 })
 export class BookNodeSellerComponent implements OnInit {
+
+  @Input('book_data') book_data: any;
+  @Output('refresh_trigger') refresh_trigger = new EventEmitter<boolean>();
 
   constructor(
     private modalService: NgbModal,
@@ -19,7 +23,7 @@ export class BookNodeSellerComponent implements OnInit {
   openDetail(){
     
     const modalRef = this.modalService.open(BookDetailSellerComponent, { size: 'xl', scrollable: true, centered: true });
-    modalRef.componentInstance.name = 'Objective Detail Page';
+    modalRef.componentInstance.book_data = this.book_data;
     
 
     // modalRef.dismissed.subscribe((data)=>{
@@ -29,25 +33,11 @@ export class BookNodeSellerComponent implements OnInit {
 
     modalRef.closed.subscribe((data)=>{
 
-      // if(data === true){
+      if(data === "REFRESH"){
 
-      //   this.task_loading_state = true;
-      //   this.loadToDoList()
-      //   .subscribe(([success, result])=>{
-      //     console.log(success)
-      //     console.log(result)
-      //     if(success){
-      //       let pagination_data = result["Pagination_Data"];
-      //       let data = result["List_Data"];
-      //       data = this.formatToDoList(data);
-      //       this.todo_data_count = data["Count_Task_Total"];
-      //       this.todo_data = data["Group_Data"];
-      //       this.todo_data_key_list = Object.keys(this.todo_data);
-      //     }
-      //     this.task_loading_state = false;
-      //   });
+        this.refresh_trigger.emit(true);
 
-      // }
+      }
       
 
     });

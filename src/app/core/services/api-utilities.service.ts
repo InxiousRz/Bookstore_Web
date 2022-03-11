@@ -2,23 +2,24 @@ import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
-import * as jwt from 'jsonwebtoken'; 
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { DialogueErrorComponent } from '../dialogue-error/dialogue-error.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DialogueInfoComponent } from '../dialogue-info/dialogue-info.component';
+
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class ApiUtilitiesService {
 
-  
-  key_pub = `-----BEGIN PUBLIC KEY-----
-  MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgH0CBhyfoFF6jsD3fOWPiwCACuDI
-  IkLgjA4MXMoDbZbioWyA+ZhUyhIu3P6XwIVJYdUAaRDYXWsaEyR/NvBRcni3gOX4
-  n3zERHtmLFyKCraHdVFDKHHfb6dlmMbXFP2xS5slCdQXwGEDwLAPj6al/zd7uhjH
-  UK8jZUxN61W+cvkzAgMBAAE=
-  -----END PUBLIC KEY-----`;
+  jwt_helper = new JwtHelperService();
 
   constructor(
     private router: Router,
     private local_storage: LocalStorageService,
+    private modalService: NgbModal,
   ) { }
 
   translateResult(response: HttpResponse<any>, api_method: string, api_url: string){
@@ -46,6 +47,10 @@ export class ApiUtilitiesService {
         if(body["message"] == "Failed"){
           success = false;
           error_desc = body;
+          return_data = {
+            "Body": body,
+            "Response": response
+          };
 
           this.openErrorDetailForm(
             JSON.stringify(error_desc, null, 2),
@@ -61,40 +66,10 @@ export class ApiUtilitiesService {
         };
   }
 
-  openErrorDetailForm(error: string, on: any, status_code: string){
-
-    console.log("==============================================");
-    console.log(error);
-    console.log(on);
-    console.log(status_code);
-    console.log("==============================================");
-
-
-    // const modalRef = this.modalService.open(ErrorDialogueComponent, { size: 'xl', scrollable: true, centered: true });
-    // modalRef.componentInstance.name = 'Error Page';
-    // modalRef.componentInstance.error = error;
-    // modalRef.componentInstance.on = on;
-    // modalRef.componentInstance.status_code = status_code;
-    
-
-    // modalRef.dismissed.subscribe((data)=>{
-    //   console.log("=============== DISSMISS  ==");
-    //   console.log(data);
-    // });
-
-    // modalRef.closed.subscribe((data)=>{
-
-    // });
-
-    // modalRef.hidden.subscribe((data)=>{
-    //   console.log("=============== HIDDEN  ==");
-    //   console.log(data);
-    // });
-  }
-
   renavigateLogin(error: string, error_data: string){
     
     this.router.navigate(['login']); // RELOGIN
+    this.openInfoDetailForm("Your Login session have been expired, please Re-Login.")
   
   }
 
@@ -124,43 +99,96 @@ export class ApiUtilitiesService {
     return false;
   }
 
-  decryptAuthandGetUserData(access_token: string){
+  decryptAuthandSaveUserData(access_token: string){
 
-    let success;
-    let valid_data;
+    let valid_data = this.jwt_helper.decodeToken(access_token);
+    console.log(valid_data)
 
-    try {
+    this.local_storage.setItem('user_data', JSON.stringify(valid_data));
 
-        // valid_data = verify(
-        //     access_token,
-        //     this.key_pub,
-        //     {
-        //       algorithms: ["RS256"]
-        //     }
-        // );
-        valid_data = jwt.decode(
-          access_token
-        );
+  }
 
-        console.log(valid_data)
+  saveUserData(user_data: any){
 
-        success = true;
+    console.log(user_data)
 
-    } catch(err: any){
+    this.local_storage.setItem('user_data', JSON.stringify(user_data));
 
-        console.log(err.message);
-        valid_data = err.message;
-        success = false;
+  }
 
-        // EXPIRED
-        if(err.name == "TokenExpiredError"){
-            success = true;
-            valid_data = "TokenExpiredError";
-        }
+  getCurrentUserData(){
+
+
+    let data = this.local_storage.getItem('user_data');
+    let returning: any | null = null;
+
+    if(data){
+      returning = JSON.parse(data);
     }
 
-    return [success, valid_data];
+    return returning;
 
+  }
+
+
+  getActiveAccessToken(){
+    return this.local_storage.getItem('access_token');
+  }
+
+  getActiveRefreshToken(){
+    return this.local_storage.getItem('refresh_token');
+  }
+
+  openErrorDetailForm(error: string, on: any, status_code: string){
+    const modalRef = this.modalService.open(DialogueErrorComponent, { size: 'xl', scrollable: true, centered: true, backdrop: 'static' });
+    modalRef.componentInstance.name = 'Error Page';
+    modalRef.componentInstance.error = error;
+    modalRef.componentInstance.on = on;
+    modalRef.componentInstance.status_code = status_code;
+    
+
+    // modalRef.dismissed.subscribe((data)=>{
+    //   console.log("=============== DISSMISS  ==");
+    //   console.log(data);
+    // });
+
+    modalRef.closed.subscribe((data)=>{
+
+    });
+
+    // modalRef.hidden.subscribe((data)=>{
+    //   console.log("=============== HIDDEN  ==");
+    //   console.log(data);
+    // });
+  }
+
+  openInfoDetailForm(on: any){
+    const modalRef = this.modalService.open(DialogueInfoComponent, { size: 'xl', scrollable: true, centered: true, backdrop: 'static' });
+    modalRef.componentInstance.name = 'Notifiaction Page';
+    modalRef.componentInstance.on = on;
+    
+
+    // modalRef.dismissed.subscribe((data)=>{
+    //   console.log("=============== DISSMISS  ==");
+    //   console.log(data);
+    // });
+
+    modalRef.closed.subscribe((data)=>{
+
+    });
+
+    // modalRef.hidden.subscribe((data)=>{
+    //   console.log("=============== HIDDEN  ==");
+    //   console.log(data);
+    // });
+  }
+
+  renavigateLoginSilent(){
+    this.router.navigate(['login']); // RELOGIN
+  }
+
+  renavigateDashboard(){
+    this.router.navigate(['dashboard']); // RELOGIN
   }
 
 }

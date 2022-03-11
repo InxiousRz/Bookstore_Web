@@ -19,6 +19,11 @@ export class ApiService {
     this.mainlink = "http://localhost:4050";
   }
 
+
+  // ============================================================================================================================
+  // AUTHOR
+  // ============================================================================================================================
+
   refreshToken() {
 
     console.log("Refresh Token =====================");
@@ -140,6 +145,151 @@ export class ApiService {
     return result;
   }
 
+  updateAuthor(name: string, pen_name: string) {
+
+    let base_url = `${this.mainlink}/author/update`;
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.put(
+      base_url,
+      {
+        "Name": name,
+        "Pen_Name": pen_name
+      },
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  updateAuthorPassword(old_password: string, new_password: string) {
+
+    let base_url = `${this.mainlink}/author/change_password`;
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.put(
+      base_url,
+      {
+        "Old_Password": old_password,
+        "New_Password": new_password
+      },
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  getAuthorProfile() {
+
+    let base_url = `${this.mainlink}/author/get_my_profile`;
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.get(
+      base_url,
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  resetAuthorPassword(email: string) {
+
+    let base_url = `${this.mainlink}/author/forgot_password`;
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.post(
+      base_url,
+      {
+        "Email": email
+      },
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  disableAuthorProfile() {
+
+    let base_url = `${this.mainlink}/author/delete`;
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.delete(
+      base_url,
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  // ============================================================================================================================
+  // BOOKS
+  // ============================================================================================================================
+
   getBooks(name_search: string | null, author_id: number | null, page: number, limit: number) {
 
     let base_url = `${this.mainlink}/book/get`;
@@ -186,4 +336,282 @@ export class ApiService {
     return result;
   }
 
+  getMyBooks(name_search: string | null, page: number, limit: number) {
+
+    let base_url = `${this.mainlink}/book/get_my_book`;
+
+    // PARAMS
+    // =====================================================================
+    let query_param = new HttpParams();
+
+    // TITLE
+    if(name_search != null){
+      query_param = query_param.set("Title", name_search.toString());
+    }
+
+    // PAGE
+    query_param = query_param.set("Page", page.toString());
+
+    // LIMIT
+    query_param = query_param.set("Limit", limit.toString());
+
+    // console.log(query_param.toString());
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.get(
+      base_url,
+      {
+        headers: header,
+        params: query_param,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  getBookByID(book_id: number) {
+
+    let base_url = `${this.mainlink}/book/get/` + book_id.toString();
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.get(
+      base_url,
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  updateBookCover(cover_base64: string, cover_extension: string, book_id: number) {
+
+    let base_url = `${this.mainlink}/book/update_cover/`+ book_id.toString();
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.put(
+      base_url,
+      {
+        "Cover_Image_Base64": cover_base64,
+        "Image_Extension": cover_extension,
+      },
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  updateBook(title: string, summary: string, price: number, stock: number, book_id: number) {
+
+    let base_url = `${this.mainlink}/book/update/`+ book_id.toString();
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.put(
+      base_url,
+      {
+        "Title": title,
+        "Summary": summary,
+        "Price": price,
+        "Stock": stock,
+      },
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  addBook(title: string, summary: string, price: number, stock: number, cover_base64: string, cover_extension: string) {
+
+    let base_url = `${this.mainlink}/book/add`;
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.post(
+      base_url,
+      {
+        "Title": title,
+        "Summary": summary,
+        "Price": price,
+        "Stock": stock,
+        "Cover_Image_Base64": cover_base64,
+        "Image_Extension": cover_extension,
+      },
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  deleteBook(book_id: number) {
+
+    let base_url = `${this.mainlink}/book/delete/` + book_id.toString();
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.delete(
+      base_url,
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+
+  // ============================================================================================================================
+  // SALES
+  // ============================================================================================================================
+  
+
+  createSales(name: string, email: string, quantity: number, book_id: number) {
+
+    let base_url = `${this.mainlink}/sales/add`;
+
+    // PARAMS
+    // =====================================================================
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.post(
+      base_url,
+      {
+        "Name": name,
+        "Email": email,
+        "Quantity": quantity,
+        "Book_ID": book_id
+      },
+      {
+        headers: header,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+
+  getMySales(book_title: string | null, created_start: number | null, created_end: number | null, page: number, limit: number) {
+
+    let base_url = `${this.mainlink}/sales/get_my_sales`;
+
+    // PARAMS
+    // =====================================================================
+    let query_param = new HttpParams();
+
+    // TITLE
+    if(book_title != null){
+      query_param = query_param.set("Book_Title", book_title.toString());
+    }
+
+    // TITLE
+    if(created_start != null){
+      query_param = query_param.set("Created_Time_Start", created_start.toString());
+    }
+
+    // TITLE
+    if(created_end != null){
+      query_param = query_param.set("Created_Time_End", created_end.toString());
+    }
+
+    // PAGE
+    query_param = query_param.set("Page", page.toString());
+
+    // LIMIT
+    query_param = query_param.set("Limit", limit.toString());
+
+    // console.log(query_param.toString());
+
+    // HEADER
+    // =====================================================================
+    let header = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+
+    console.log(base_url)
+
+    let result = this.http.get(
+      base_url,
+      {
+        headers: header,
+        params: query_param,
+        observe: 'response'
+      }
+    );
+
+    return result;
+  }
+  
 }

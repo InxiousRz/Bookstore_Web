@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResetPassPageComponent } from './reset-pass-page.component';
+import { SalesPageComponent } from './sales-page.component';
 
-describe('ResetPassPageComponent', () => {
-  let component: ResetPassPageComponent;
-  let fixture: ComponentFixture<ResetPassPageComponent>;
+describe('SalesPageComponent', () => {
+  let component: SalesPageComponent;
+  let fixture: ComponentFixture<SalesPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResetPassPageComponent ]
+      declarations: [ SalesPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResetPassPageComponent);
+    fixture = TestBed.createComponent(SalesPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
