@@ -41,8 +41,27 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       // CATCH ERR
       catchError((error: HttpErrorResponse, caught: Observable<HttpEvent<unknown>>) => {
 
+
         // UNAUTHORIZED
         if (error && error.status === 401) {
+
+          console.log(error.error);
+
+           // REFRESH TOKEN INVALID / EXPIRED
+          if (
+            error.error["error_key"] == "error_refresh_token_invalid" 
+            || error.error["error_key"] == "error_refresh_token_expired" 
+            || error.error["error_key"] == "error_invalid_token"
+          ){
+
+            this.api_utilities.renavigateLogin(
+              error.error["error_message"],
+              JSON.stringify(error.error, null, 2),
+            );
+
+            return next.handle(request);
+          }
+
           // 401 errors are most likely going to be because we have an expired token that we need to refresh.
           if (this.refresh_token_inprogress) {
             // If refresh_token_inprogress is true, we will wait until refresh_token_subject has a non-null value
@@ -131,6 +150,15 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
             );
 
           }
+
+        } 
+
+        if(response.status === 401){
+
+          this.api_utilities.renavigateLogin(
+            response.body["Modified_Payload"]["Body"]["error_message"],
+            JSON.stringify(response.body["Modified_Payload"], null, 2),
+          );
 
         }
 

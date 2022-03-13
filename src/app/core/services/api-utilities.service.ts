@@ -170,10 +170,10 @@ export class ApiUtilitiesService {
     // });
   }
 
-  openInfoDetailForm(on: any){
+  openInfoDetailForm(what_happen: any){
     const modalRef = this.modalService.open(DialogueInfoComponent, { size: 'xl', scrollable: true, centered: true, backdrop: 'static' });
     modalRef.componentInstance.name = 'Notifiaction Page';
-    modalRef.componentInstance.on = on;
+    modalRef.componentInstance.what_happen = what_happen;
     
 
     // modalRef.dismissed.subscribe((data)=>{

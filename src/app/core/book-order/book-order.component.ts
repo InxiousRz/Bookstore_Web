@@ -16,7 +16,7 @@ export class BookOrderComponent implements OnInit {
 
   rec_name: string | null = null;
   rec_email: string | null = null;
-  quantity: number | null = null;
+  quantity: number | null = 1;
 
   ngclass_rec_name: any = {
     "form-control": true,
@@ -183,4 +183,13 @@ export class BookOrderComponent implements OnInit {
     return "Rp. " + this.api_utilities.formatCurrency(currency);
   }
 
+
+  getTotalPrice(){
+    return this.formatCurrencyReadable((Math.max(
+      Number(
+        (this.book_data['Price'] == '' || this.book_data['Price'] == '') == true ? 0 : this.book_data['Price']), 
+        0
+        ) * 
+      Math.max(this.quantity == null ? 0 : this.quantity, 0)).toString());
+  }
 }

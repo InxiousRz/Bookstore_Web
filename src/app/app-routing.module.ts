@@ -29,6 +29,7 @@ const routes: Routes = [
   {
     path: 'seller',
     canActivate: [AuthGuardGuard],
+    resolve: {data: PreloadDataGuard},
     children: [
       {
         path: '', // child route path
